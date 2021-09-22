@@ -38,9 +38,6 @@ namespace MDMTask
             this.dateTimePickerEndDate = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.dateTimePickerTriggerTime = new System.Windows.Forms.DateTimePicker();
-            this.checkBoxOneTimeOnlyActive = new System.Windows.Forms.CheckBox();
-            this.labelOneTimeOnlyDay = new System.Windows.Forms.Label();
-            this.dateTimePickerOneTimeOnlyDay = new System.Windows.Forms.DateTimePicker();
             this.numericUpDownDaily = new System.Windows.Forms.NumericUpDown();
             this.labelDailyEvery = new System.Windows.Forms.Label();
             this.labelDailyDay = new System.Windows.Forms.Label();
@@ -59,18 +56,28 @@ namespace MDMTask
             this.weeklyRadio = new System.Windows.Forms.RadioButton();
             this.monthlyRadio = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelAddArgument = new System.Windows.Forms.Label();
+            this.labelStartIn = new System.Windows.Forms.Label();
+            this.ArgumentBox = new System.Windows.Forms.TextBox();
+            this.startInBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.monthlyPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDaily)).BeginInit();
             this.tabControlMonthlyMode.SuspendLayout();
             this.tabPageMonthlyDayOfMonth.SuspendLayout();
             this.tabPageMonthlyWeekDay.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.monthlyPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCreateTask
             // 
-            this.btnCreateTask.Location = new System.Drawing.Point(231, 29);
+            this.btnCreateTask.Location = new System.Drawing.Point(384, 31);
             this.btnCreateTask.Name = "btnCreateTask";
-            this.btnCreateTask.Size = new System.Drawing.Size(92, 29);
+            this.btnCreateTask.Size = new System.Drawing.Size(75, 20);
             this.btnCreateTask.TabIndex = 0;
             this.btnCreateTask.Text = "Create Task";
             this.btnCreateTask.UseVisualStyleBackColor = true;
@@ -78,25 +85,25 @@ namespace MDMTask
             // 
             // searchBox1
             // 
-            this.searchBox1.Location = new System.Drawing.Point(113, 34);
+            this.searchBox1.Location = new System.Drawing.Point(145, 34);
             this.searchBox1.Name = "searchBox1";
-            this.searchBox1.Size = new System.Drawing.Size(103, 20);
+            this.searchBox1.Size = new System.Drawing.Size(205, 20);
             this.searchBox1.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(13, 37);
+            this.label1.Location = new System.Drawing.Point(23, 37);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 14);
+            this.label1.Size = new System.Drawing.Size(89, 14);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Program Name";
+            this.label1.Text = "Program/Script :";
             // 
             // labelStartDate
             // 
             this.labelStartDate.AutoSize = true;
-            this.labelStartDate.Location = new System.Drawing.Point(13, 74);
+            this.labelStartDate.Location = new System.Drawing.Point(154, 148);
             this.labelStartDate.Name = "labelStartDate";
             this.labelStartDate.Size = new System.Drawing.Size(32, 13);
             this.labelStartDate.TabIndex = 3;
@@ -104,15 +111,15 @@ namespace MDMTask
             // 
             // dateTimePickerStartDate
             // 
-            this.dateTimePickerStartDate.Location = new System.Drawing.Point(63, 74);
+            this.dateTimePickerStartDate.Location = new System.Drawing.Point(192, 143);
             this.dateTimePickerStartDate.Name = "dateTimePickerStartDate";
-            this.dateTimePickerStartDate.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerStartDate.Size = new System.Drawing.Size(158, 20);
             this.dateTimePickerStartDate.TabIndex = 4;
             // 
             // labelEndDate
             // 
             this.labelEndDate.AutoSize = true;
-            this.labelEndDate.Location = new System.Drawing.Point(16, 109);
+            this.labelEndDate.Location = new System.Drawing.Point(389, 148);
             this.labelEndDate.Name = "labelEndDate";
             this.labelEndDate.Size = new System.Drawing.Size(29, 13);
             this.labelEndDate.TabIndex = 39;
@@ -120,16 +127,16 @@ namespace MDMTask
             // 
             // dateTimePickerEndDate
             // 
-            this.dateTimePickerEndDate.Location = new System.Drawing.Point(63, 102);
+            this.dateTimePickerEndDate.Location = new System.Drawing.Point(424, 143);
             this.dateTimePickerEndDate.Name = "dateTimePickerEndDate";
-            this.dateTimePickerEndDate.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePickerEndDate.Size = new System.Drawing.Size(164, 20);
             this.dateTimePickerEndDate.TabIndex = 40;
             this.dateTimePickerEndDate.Value = new System.DateTime(2022, 9, 17, 17, 25, 0, 0);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 139);
+            this.label2.Location = new System.Drawing.Point(619, 148);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(33, 13);
             this.label2.TabIndex = 50;
@@ -139,41 +146,15 @@ namespace MDMTask
             // 
             this.dateTimePickerTriggerTime.CustomFormat = "";
             this.dateTimePickerTriggerTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerTriggerTime.Location = new System.Drawing.Point(63, 133);
+            this.dateTimePickerTriggerTime.Location = new System.Drawing.Point(658, 142);
             this.dateTimePickerTriggerTime.Name = "dateTimePickerTriggerTime";
             this.dateTimePickerTriggerTime.ShowUpDown = true;
             this.dateTimePickerTriggerTime.Size = new System.Drawing.Size(96, 20);
             this.dateTimePickerTriggerTime.TabIndex = 51;
             // 
-            // checkBoxOneTimeOnlyActive
-            // 
-            this.checkBoxOneTimeOnlyActive.AutoSize = true;
-            this.checkBoxOneTimeOnlyActive.Location = new System.Drawing.Point(150, 186);
-            this.checkBoxOneTimeOnlyActive.Name = "checkBoxOneTimeOnlyActive";
-            this.checkBoxOneTimeOnlyActive.Size = new System.Drawing.Size(56, 17);
-            this.checkBoxOneTimeOnlyActive.TabIndex = 0;
-            this.checkBoxOneTimeOnlyActive.Text = "Active";
-            this.checkBoxOneTimeOnlyActive.UseVisualStyleBackColor = true;
-            // 
-            // labelOneTimeOnlyDay
-            // 
-            this.labelOneTimeOnlyDay.AutoSize = true;
-            this.labelOneTimeOnlyDay.Location = new System.Drawing.Point(150, 209);
-            this.labelOneTimeOnlyDay.Name = "labelOneTimeOnlyDay";
-            this.labelOneTimeOnlyDay.Size = new System.Drawing.Size(29, 13);
-            this.labelOneTimeOnlyDay.TabIndex = 2;
-            this.labelOneTimeOnlyDay.Text = "Day:";
-            // 
-            // dateTimePickerOneTimeOnlyDay
-            // 
-            this.dateTimePickerOneTimeOnlyDay.Location = new System.Drawing.Point(190, 204);
-            this.dateTimePickerOneTimeOnlyDay.Name = "dateTimePickerOneTimeOnlyDay";
-            this.dateTimePickerOneTimeOnlyDay.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePickerOneTimeOnlyDay.TabIndex = 1;
-            // 
             // numericUpDownDaily
             // 
-            this.numericUpDownDaily.Location = new System.Drawing.Point(190, 230);
+            this.numericUpDownDaily.Location = new System.Drawing.Point(54, 10);
             this.numericUpDownDaily.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -186,7 +167,7 @@ namespace MDMTask
             // labelDailyEvery
             // 
             this.labelDailyEvery.AutoSize = true;
-            this.labelDailyEvery.Location = new System.Drawing.Point(150, 232);
+            this.labelDailyEvery.Location = new System.Drawing.Point(14, 12);
             this.labelDailyEvery.Name = "labelDailyEvery";
             this.labelDailyEvery.Size = new System.Drawing.Size(34, 13);
             this.labelDailyEvery.TabIndex = 4;
@@ -195,17 +176,16 @@ namespace MDMTask
             // labelDailyDay
             // 
             this.labelDailyDay.AutoSize = true;
-            this.labelDailyDay.Location = new System.Drawing.Point(245, 232);
+            this.labelDailyDay.Location = new System.Drawing.Point(109, 12);
             this.labelDailyDay.Name = "labelDailyDay";
             this.labelDailyDay.Size = new System.Drawing.Size(24, 13);
             this.labelDailyDay.TabIndex = 5;
             this.labelDailyDay.Text = "day";
-            this.labelDailyDay.Click += new System.EventHandler(this.labelDailyDay_Click);
             // 
             // labelWeeklyDays
             // 
             this.labelWeeklyDays.AutoSize = true;
-            this.labelWeeklyDays.Location = new System.Drawing.Point(217, 219);
+            this.labelWeeklyDays.Location = new System.Drawing.Point(109, 12);
             this.labelWeeklyDays.Name = "labelWeeklyDays";
             this.labelWeeklyDays.Size = new System.Drawing.Size(34, 13);
             this.labelWeeklyDays.TabIndex = 28;
@@ -223,7 +203,7 @@ namespace MDMTask
             "Thursday",
             "Friday",
             "Saturday"});
-            this.checkedListBoxWeeklyDays.Location = new System.Drawing.Point(257, 219);
+            this.checkedListBoxWeeklyDays.Location = new System.Drawing.Point(145, 12);
             this.checkedListBoxWeeklyDays.Name = "checkedListBoxWeeklyDays";
             this.checkedListBoxWeeklyDays.Size = new System.Drawing.Size(104, 109);
             this.checkedListBoxWeeklyDays.TabIndex = 0;
@@ -232,10 +212,10 @@ namespace MDMTask
             // 
             this.tabControlMonthlyMode.Controls.Add(this.tabPageMonthlyDayOfMonth);
             this.tabControlMonthlyMode.Controls.Add(this.tabPageMonthlyWeekDay);
-            this.tabControlMonthlyMode.Location = new System.Drawing.Point(478, 186);
+            this.tabControlMonthlyMode.Location = new System.Drawing.Point(201, 14);
             this.tabControlMonthlyMode.Name = "tabControlMonthlyMode";
             this.tabControlMonthlyMode.SelectedIndex = 0;
-            this.tabControlMonthlyMode.Size = new System.Drawing.Size(224, 151);
+            this.tabControlMonthlyMode.Size = new System.Drawing.Size(229, 155);
             this.tabControlMonthlyMode.TabIndex = 1;
             // 
             // tabPageMonthlyDayOfMonth
@@ -244,7 +224,7 @@ namespace MDMTask
             this.tabPageMonthlyDayOfMonth.Location = new System.Drawing.Point(4, 22);
             this.tabPageMonthlyDayOfMonth.Name = "tabPageMonthlyDayOfMonth";
             this.tabPageMonthlyDayOfMonth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMonthlyDayOfMonth.Size = new System.Drawing.Size(216, 125);
+            this.tabPageMonthlyDayOfMonth.Size = new System.Drawing.Size(204, 129);
             this.tabPageMonthlyDayOfMonth.TabIndex = 0;
             this.tabPageMonthlyDayOfMonth.Text = "Day of Month";
             this.tabPageMonthlyDayOfMonth.UseVisualStyleBackColor = true;
@@ -298,7 +278,7 @@ namespace MDMTask
             this.tabPageMonthlyWeekDay.Location = new System.Drawing.Point(4, 22);
             this.tabPageMonthlyWeekDay.Name = "tabPageMonthlyWeekDay";
             this.tabPageMonthlyWeekDay.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMonthlyWeekDay.Size = new System.Drawing.Size(216, 125);
+            this.tabPageMonthlyWeekDay.Size = new System.Drawing.Size(221, 129);
             this.tabPageMonthlyWeekDay.TabIndex = 1;
             this.tabPageMonthlyWeekDay.Text = "Weekday";
             this.tabPageMonthlyWeekDay.UseVisualStyleBackColor = true;
@@ -312,7 +292,7 @@ namespace MDMTask
             "Second",
             "Third",
             "Fourth",
-            "Last Week"});
+            "Last"});
             this.checkedListBoxMonthlyWeekNumber.Location = new System.Drawing.Point(8, 8);
             this.checkedListBoxMonthlyWeekNumber.Name = "checkedListBoxMonthlyWeekNumber";
             this.checkedListBoxMonthlyWeekNumber.Size = new System.Drawing.Size(95, 94);
@@ -338,7 +318,7 @@ namespace MDMTask
             // labelMonthlyMonth
             // 
             this.labelMonthlyMonth.AutoSize = true;
-            this.labelMonthlyMonth.Location = new System.Drawing.Point(306, 177);
+            this.labelMonthlyMonth.Location = new System.Drawing.Point(29, 14);
             this.labelMonthlyMonth.Name = "labelMonthlyMonth";
             this.labelMonthlyMonth.Size = new System.Drawing.Size(40, 13);
             this.labelMonthlyMonth.TabIndex = 29;
@@ -361,7 +341,7 @@ namespace MDMTask
             "October",
             "November",
             "December"});
-            this.checkedListBoxMonthlyMonths.Location = new System.Drawing.Point(352, 177);
+            this.checkedListBoxMonthlyMonths.Location = new System.Drawing.Point(75, 14);
             this.checkedListBoxMonthlyMonths.Name = "checkedListBoxMonthlyMonths";
             this.checkedListBoxMonthlyMonths.Size = new System.Drawing.Size(120, 109);
             this.checkedListBoxMonthlyMonths.TabIndex = 0;
@@ -418,27 +398,88 @@ namespace MDMTask
             this.panel1.Controls.Add(this.monthlyRadio);
             this.panel1.Controls.Add(this.dailyRadio);
             this.panel1.Controls.Add(this.weeklyRadio);
-            this.panel1.Location = new System.Drawing.Point(16, 177);
+            this.panel1.Location = new System.Drawing.Point(25, 137);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(128, 161);
+            this.panel1.Size = new System.Drawing.Size(120, 235);
             this.panel1.TabIndex = 57;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // labelAddArgument
+            // 
+            this.labelAddArgument.AutoSize = true;
+            this.labelAddArgument.Location = new System.Drawing.Point(22, 71);
+            this.labelAddArgument.Name = "labelAddArgument";
+            this.labelAddArgument.Size = new System.Drawing.Size(123, 13);
+            this.labelAddArgument.TabIndex = 58;
+            this.labelAddArgument.Text = "Add Argument(optional) :";
+            // 
+            // labelStartIn
+            // 
+            this.labelStartIn.AutoSize = true;
+            this.labelStartIn.Location = new System.Drawing.Point(23, 103);
+            this.labelStartIn.Name = "labelStartIn";
+            this.labelStartIn.Size = new System.Drawing.Size(92, 13);
+            this.labelStartIn.TabIndex = 59;
+            this.labelStartIn.Text = "Start in (optional) :";
+            // 
+            // ArgumentBox
+            // 
+            this.ArgumentBox.Location = new System.Drawing.Point(145, 68);
+            this.ArgumentBox.Name = "ArgumentBox";
+            this.ArgumentBox.Size = new System.Drawing.Size(205, 20);
+            this.ArgumentBox.TabIndex = 60;
+            // 
+            // startInBox
+            // 
+            this.startInBox.Location = new System.Drawing.Point(145, 94);
+            this.startInBox.Name = "startInBox";
+            this.startInBox.Size = new System.Drawing.Size(205, 20);
+            this.startInBox.TabIndex = 61;
+            // 
+            // label3
+            // 
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label3.Location = new System.Drawing.Point(143, 370);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(2, 2);
+            this.label3.TabIndex = 62;
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.monthlyPanel);
+            this.panel2.Controls.Add(this.labelDailyEvery);
+            this.panel2.Controls.Add(this.numericUpDownDaily);
+            this.panel2.Controls.Add(this.labelWeeklyDays);
+            this.panel2.Controls.Add(this.labelDailyDay);
+            this.panel2.Controls.Add(this.checkedListBoxWeeklyDays);
+            this.panel2.Location = new System.Drawing.Point(154, 172);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(600, 200);
+            this.panel2.TabIndex = 63;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // monthlyPanel
+            // 
+            this.monthlyPanel.Controls.Add(this.tabControlMonthlyMode);
+            this.monthlyPanel.Controls.Add(this.checkedListBoxMonthlyMonths);
+            this.monthlyPanel.Controls.Add(this.labelMonthlyMonth);
+            this.monthlyPanel.Location = new System.Drawing.Point(109, 3);
+            this.monthlyPanel.Name = "monthlyPanel";
+            this.monthlyPanel.Size = new System.Drawing.Size(433, 175);
+            this.monthlyPanel.TabIndex = 64;
             // 
             // frmTaskScheduler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(761, 461);
-            this.Controls.Add(this.tabControlMonthlyMode);
-            this.Controls.Add(this.checkedListBoxWeeklyDays);
-            this.Controls.Add(this.checkedListBoxMonthlyMonths);
-            this.Controls.Add(this.labelMonthlyMonth);
-            this.Controls.Add(this.labelWeeklyDays);
-            this.Controls.Add(this.labelDailyDay);
-            this.Controls.Add(this.numericUpDownDaily);
-            this.Controls.Add(this.dateTimePickerOneTimeOnlyDay);
-            this.Controls.Add(this.labelDailyEvery);
-            this.Controls.Add(this.labelOneTimeOnlyDay);
-            this.Controls.Add(this.checkBoxOneTimeOnlyActive);
+            this.ClientSize = new System.Drawing.Size(773, 429);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.startInBox);
+            this.Controls.Add(this.ArgumentBox);
+            this.Controls.Add(this.labelStartIn);
+            this.Controls.Add(this.labelAddArgument);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dateTimePickerTriggerTime);
             this.Controls.Add(this.label2);
@@ -457,6 +498,10 @@ namespace MDMTask
             this.tabPageMonthlyWeekDay.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.monthlyPanel.ResumeLayout(false);
+            this.monthlyPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -473,9 +518,6 @@ namespace MDMTask
         private System.Windows.Forms.DateTimePicker dateTimePickerEndDate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dateTimePickerTriggerTime;
-        private System.Windows.Forms.CheckBox checkBoxOneTimeOnlyActive;
-        private System.Windows.Forms.Label labelOneTimeOnlyDay;
-        private System.Windows.Forms.DateTimePicker dateTimePickerOneTimeOnlyDay;
         private System.Windows.Forms.NumericUpDown numericUpDownDaily;
         private System.Windows.Forms.Label labelDailyEvery;
         private System.Windows.Forms.Label labelDailyDay;
@@ -494,6 +536,13 @@ namespace MDMTask
         private System.Windows.Forms.RadioButton weeklyRadio;
         private System.Windows.Forms.RadioButton monthlyRadio;
         private System.Windows.Forms.Panel panel1;
-      
+        private System.Windows.Forms.Label labelAddArgument;
+        private System.Windows.Forms.Label labelStartIn;
+        private System.Windows.Forms.TextBox ArgumentBox;
+        private System.Windows.Forms.TextBox startInBox;
+        private System.Windows.Forms.Label label3;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel monthlyPanel;
     }
 }

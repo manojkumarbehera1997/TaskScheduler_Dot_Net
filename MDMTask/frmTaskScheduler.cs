@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using TaskScheduler;
 
@@ -9,13 +10,9 @@ namespace MDMTask
         public frmTaskScheduler()
         {
             InitializeComponent();
-            checkBoxOneTimeOnlyActive.Checked = true;
             dateTimePickerTriggerTime.Value = DateTime.Now.AddMinutes(2);
             if (oneTimeRadio.Checked)
-            {
-                checkBoxOneTimeOnlyActive.Visible = true;
-                labelOneTimeOnlyDay.Visible = true;
-                dateTimePickerOneTimeOnlyDay.Visible = true;
+            {              
                 labelDailyEvery.Visible = false;
                 numericUpDownDaily.Visible = false;
                 labelDailyDay.Visible = false;
@@ -31,9 +28,13 @@ namespace MDMTask
         ITaskDefinition objTaskDef;
         //To hold Trigger Information
         ITimeTrigger objTrigger;
+        //For Daily Trigger
         IDailyTrigger objDailyTrigger;
+        //For Weekly Trigger
         IWeeklyTrigger objweeklyTrigger;
+        //For Monthly Trigger
         IMonthlyTrigger objMonthlyTrigger;
+        //For MothlyDow Trigger
         IMonthlyDOWTrigger objMonthlyDOWTrigger;
         //To hold Action Information
         IExecAction objAction;
@@ -57,7 +58,7 @@ namespace MDMTask
                 //Registering the task, if the task is already exist then it will be updated
                 IRegisteredTask regTask = root.RegisterTaskDefinition("MDMTask", objTaskDef, (int)_TASK_CREATION.TASK_CREATE_OR_UPDATE, null, null, _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN, "");
 
-                ////To execute the task immediately calling Run()
+                //To execute the task immediately calling Run()
                 //IRunningTask runtask = regTask.Run(null);
 
                 MessageBox.Show("Task is created successfully");
@@ -86,7 +87,7 @@ namespace MDMTask
                 //Thread Priority
                 objTaskDef.Settings.Priority = 7;
                 //Enabling the task
-                objTaskDef.Settings.Enabled = checkBoxOneTimeOnlyActive.Checked;
+                objTaskDef.Settings.Enabled = true;
                 //To hide/show the task
                 objTaskDef.Settings.Hidden = false;
                 //Execution Time Lmit for task
@@ -138,7 +139,7 @@ namespace MDMTask
                     objDailyTrigger = (IDailyTrigger)objTaskDef.Triggers.Create(_TASK_TRIGGER_TYPE2.TASK_TRIGGER_DAILY);
                     //Start Time
                     objDailyTrigger.StartBoundary = startTrigger; //yyyy-MM-ddTHH:mm:ss                                                          
-                    //objTrigger.EndBoundary = endDate; //yyyy-MM-ddTHH:mm:ss
+                    objTrigger.EndBoundary = endDate; //yyyy-MM-ddTHH:mm:ss
                     objDailyTrigger.DaysInterval = (short)numericUpDownDaily.Value;                
                 }
                 catch (Exception ex)
@@ -353,7 +354,7 @@ namespace MDMTask
                                 week += 8;                                                         
                         }
                         objMonthlyDOWTrigger.WeeksOfMonth = week;
-                        if (noOfWeek.Contains("Last Week"))
+                        if (noOfWeek.Contains("Last"))
                         {
                             objMonthlyDOWTrigger.RunOnLastWeekOfMonth = true;
                         }                                                                    
@@ -394,25 +395,17 @@ namespace MDMTask
                 //Action information based on exe- TASK_ACTION_EXEC
                 objAction = (IExecAction)objTaskDef.Actions.Create(_TASK_ACTION_TYPE.TASK_ACTION_EXEC);
                 //Action ID
-                objAction.Id = "testAction1";
-                //Set the path of the exe file to execute, Here mspaint will be opened
+                objAction.Id = "Action";
+                //Set the path of the exe file to execute.
                 objAction.Path = searchBox1.Text;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-        }
-
-        private void labelDailyDay_Click(object sender, EventArgs e)
-        {
-
-        }
+        }       
         private void oneTimeRadio_CheckedChanged(object sender, EventArgs e)
         {
-            checkBoxOneTimeOnlyActive.Visible = true;
-            labelOneTimeOnlyDay.Visible = true;
-            dateTimePickerOneTimeOnlyDay.Visible = true;
             labelDailyEvery.Visible = false;
             numericUpDownDaily.Visible = false;
             labelDailyDay.Visible = false;
@@ -422,49 +415,53 @@ namespace MDMTask
             checkedListBoxMonthlyMonths.Visible = false;
             tabControlMonthlyMode.Visible = false;
         }
-
         private void dailyRadio_CheckedChanged(object sender, EventArgs e)
         {
-            checkBoxOneTimeOnlyActive.Visible = false;
-            labelOneTimeOnlyDay.Visible = false;
-            dateTimePickerOneTimeOnlyDay.Visible = false;
             labelDailyEvery.Visible = true;
             numericUpDownDaily.Visible = true;
             labelDailyDay.Visible = true;
             labelWeeklyDays.Visible = false;
             checkedListBoxWeeklyDays.Visible = false;
-            labelMonthlyMonth.Visible = false;
-            checkedListBoxMonthlyMonths.Visible = false;
-            tabControlMonthlyMode.Visible = false;
+            monthlyPanel.Visible = false;
         }
-
         private void weeklyRadio_CheckedChanged(object sender, EventArgs e)
         {
-            checkBoxOneTimeOnlyActive.Visible = false;
-            labelOneTimeOnlyDay.Visible = false;
-            dateTimePickerOneTimeOnlyDay.Visible = false;
             labelDailyEvery.Visible = false;
             numericUpDownDaily.Visible = false;
             labelDailyDay.Visible = false;
             labelWeeklyDays.Visible = true;
             checkedListBoxWeeklyDays.Visible = true;
-            labelMonthlyMonth.Visible = false;
-            checkedListBoxMonthlyMonths.Visible = false;
-            tabControlMonthlyMode.Visible = false;
+            monthlyPanel.Visible = false;
         }
         private void monthlyRadio_CheckedChanged(object sender, EventArgs e)
         {
-            checkBoxOneTimeOnlyActive.Visible = false;
-            labelOneTimeOnlyDay.Visible = false;
-            dateTimePickerOneTimeOnlyDay.Visible = false;
             labelDailyEvery.Visible = false;
             numericUpDownDaily.Visible = false;
             labelDailyDay.Visible = false;
             labelWeeklyDays.Visible = false;
             checkedListBoxWeeklyDays.Visible = false;
+            monthlyPanel.Visible = true;
             labelMonthlyMonth.Visible = true;
             checkedListBoxMonthlyMonths.Visible = true;
             tabControlMonthlyMode.Visible = true;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, panel1.ClientRectangle,
+            Color.Empty, 0, ButtonBorderStyle.None, // left
+            Color.Empty, 0, ButtonBorderStyle.None, // top
+            Color.Black, 1, ButtonBorderStyle.Solid, // right
+            Color.Empty, 0, ButtonBorderStyle.None);// bottom
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            ControlPaint.DrawBorder(e.Graphics, panel2.ClientRectangle,
+               Color.White, 1, ButtonBorderStyle.Solid, // left
+               Color.White, 1, ButtonBorderStyle.Solid, // top
+               Color.White, 1, ButtonBorderStyle.Solid, // right
+               Color.White, 1, ButtonBorderStyle.Solid);// bottom
         }       
     }
 }
