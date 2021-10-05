@@ -7,9 +7,10 @@ namespace MDMTask
 {
     public partial class frmTaskScheduler : Form
     {
+       
         public frmTaskScheduler()
         {
-            InitializeComponent();
+            InitializeComponent();        
             dateTimePickerTriggerTime.Value = DateTime.Now.AddMinutes(2);
             if (oneTimeRadio.Checked)
             {              
@@ -22,7 +23,17 @@ namespace MDMTask
                 checkedListBoxMonthlyMonths.Visible = false;
                 tabControlMonthlyMode.Visible = false;
             }
+            connectToCheckBox.Checked = false;           
+            serverNameLabel.Visible = false;
+            ServerTextBox.Visible = false;
+            userLabel.Visible = false;
+            userTextBox.Visible = false;
+            domainLabel.Visible = false;
+            domainTextBox.Visible = false;
+            passwordLabel.Visible = false;
+            passwordTextBox.Visible = false;                       
         }
+        
         TaskSchedulerClass objScheduler;
         //To hold Task Definition
         ITaskDefinition objTaskDef;
@@ -38,13 +49,21 @@ namespace MDMTask
         IMonthlyDOWTrigger objMonthlyDOWTrigger;
         //To hold Action Information
         IExecAction objAction;
-
+        IRegisteredTask registeredTask;
+        MDMTask.TaskList taskList = new MDMTask.TaskList();
         private void btnCreateTask_Click(object sender, EventArgs e)
         {
             try
             {
                 objScheduler = new TaskSchedulerClass();
-                objScheduler.Connect();
+                if(connectToCheckBox.Checked==true)
+                {
+                    objScheduler.Connect(ServerTextBox.Text,userTextBox.Text,domainTextBox.Text,passwordTextBox.Text);
+                }
+                else
+                {
+                    objScheduler.Connect();
+                }          
 
                 //Setting Task Definition
                 SetTaskDefinition();
@@ -52,16 +71,13 @@ namespace MDMTask
                 SetTriggerInfo();
                 //Setting Task Action Information
                 SetActionInfo();
-
                 //Getting the roort folder
                 ITaskFolder root = objScheduler.GetFolder("\\MDM");
                 //Registering the task, if the task is already exist then it will be updated
-                IRegisteredTask regTask = root.RegisterTaskDefinition("MDMTask", objTaskDef, (int)_TASK_CREATION.TASK_CREATE_OR_UPDATE, null, null, _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN, "");
-
-                //To execute the task immediately calling Run()
-                //IRunningTask runtask = regTask.Run(null);
-
+                registeredTask = root.RegisterTaskDefinition("MDMTask", objTaskDef, (int)_TASK_CREATION.TASK_CREATE_OR_UPDATE, null, null, _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN, "");
                 MessageBox.Show("Task is created successfully");
+                GetTaskList();
+                taskList.Show();
             }
             catch (Exception ex)
             {
@@ -82,8 +98,6 @@ namespace MDMTask
                 objTaskDef.RegistrationInfo.Description = "MDMTask";
                 //Registration date of the task 
                 objTaskDef.RegistrationInfo.Date = DateTime.Today.ToString("yyyy-MM-ddTHH:mm:ss"); //Date format 
-
-                //Settings for task
                 //Thread Priority
                 objTaskDef.Settings.Priority = 7;
                 //Enabling the task
@@ -94,11 +108,8 @@ namespace MDMTask
                 objTaskDef.Settings.ExecutionTimeLimit = "PT10M"; //10 minutes
                 //Specifying no need of network connection
                 objTaskDef.Settings.RunOnlyIfNetworkAvailable = false;
-
                 //Set to run on battery and AC power
                 objTaskDef.Settings.DisallowStartIfOnBatteries = false;
-
-
             }
             catch (Exception ex)
             {
@@ -114,7 +125,6 @@ namespace MDMTask
             var startTrigger = dateTimePickerStartDate.Value.Date.Add(dateTimePickerTriggerTime.Value.TimeOfDay).ToString("yyyy-MM-ddTHH:mm:ss");
             if (oneTimeRadio.Checked)
             {
-
                 try
                 {
                     //Trigger information based on time - TASK_TRIGGER_TIME
@@ -124,14 +134,13 @@ namespace MDMTask
                     //Start Time
                     objTrigger.StartBoundary = startTrigger; //yyyy-MM-ddTHH:mm:ss
                     objTrigger.EndBoundary = endDate; //yyyy-MM-ddTHH:mm:ss
-                                                   
                 }
                 catch (Exception ex)
                 {
                     throw ex;
                 }
             }
-           else if (dailyRadio.Checked)
+            else if (dailyRadio.Checked)
             {
                 try
                 {
@@ -139,7 +148,7 @@ namespace MDMTask
                     objDailyTrigger = (IDailyTrigger)objTaskDef.Triggers.Create(_TASK_TRIGGER_TYPE2.TASK_TRIGGER_DAILY);
                     //Start Time
                     objDailyTrigger.StartBoundary = startTrigger; //yyyy-MM-ddTHH:mm:ss                                                          
-                    objTrigger.EndBoundary = endDate; //yyyy-MM-ddTHH:mm:ss
+                    objDailyTrigger.EndBoundary = endDate; //yyyy-MM-ddTHH:mm:ss
                     objDailyTrigger.DaysInterval = (short)numericUpDownDaily.Value;                
                 }
                 catch (Exception ex)
@@ -398,6 +407,8 @@ namespace MDMTask
                 objAction.Id = "Action";
                 //Set the path of the exe file to execute.
                 objAction.Path = searchBox1.Text;
+                //set Argumet
+                objAction.Arguments = ArgumentBox.Text;
             }
             catch (Exception ex)
             {
@@ -445,7 +456,6 @@ namespace MDMTask
             checkedListBoxMonthlyMonths.Visible = true;
             tabControlMonthlyMode.Visible = true;
         }
-
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             ControlPaint.DrawBorder(e.Graphics, panel1.ClientRectangle,
@@ -454,7 +464,6 @@ namespace MDMTask
             Color.Black, 1, ButtonBorderStyle.Solid, // right
             Color.Empty, 0, ButtonBorderStyle.None);// bottom
         }
-
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
             ControlPaint.DrawBorder(e.Graphics, panel2.ClientRectangle,
@@ -462,6 +471,44 @@ namespace MDMTask
                Color.White, 1, ButtonBorderStyle.Solid, // top
                Color.White, 1, ButtonBorderStyle.Solid, // right
                Color.White, 1, ButtonBorderStyle.Solid);// bottom
-        }       
+        }
+        public void GetTaskList()
+        {
+            taskList.listViewItems.Items.Clear();
+            ListViewItem listItem = taskList.listViewItems.Items.Add(registeredTask.Name.ToString());
+            listItem.SubItems.Add(registeredTask.State.ToString());
+            listItem.SubItems.Add(registeredTask.Definition.Triggers.ToString());
+            listItem.SubItems.Add(registeredTask.NextRunTime.ToString());
+            listItem.SubItems.Add(registeredTask.LastRunTime.ToString());
+            listItem.SubItems.Add(registeredTask.LastTaskResult.ToString());
+            listItem.SubItems.Add(registeredTask.Definition.RegistrationInfo.Author.ToString());
+            listItem.SubItems.Add(registeredTask.Definition.RegistrationInfo.Date.ToString());
+        }
+
+        private void connectToCheckBox_CheckedChanged(object sender, EventArgs e)
+        {           
+            if (connectToCheckBox.Checked == false)
+            {
+                serverNameLabel.Visible = false;
+                ServerTextBox.Visible = false;
+                userLabel.Visible = false;
+                userTextBox.Visible = false;
+                domainLabel.Visible = false;
+                domainTextBox.Visible = false;
+                passwordLabel.Visible = false;
+                passwordTextBox.Visible = false;
+            }
+            else
+            {
+                serverNameLabel.Visible = true;
+                ServerTextBox.Visible = true;
+                userLabel.Visible = true;
+                userTextBox.Visible = true;
+                domainLabel.Visible = true;
+                domainTextBox.Visible = true;
+                passwordLabel.Visible = true;
+                passwordTextBox.Visible = true;
+            }
+        }
     }
 }

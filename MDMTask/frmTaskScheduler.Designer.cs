@@ -64,6 +64,16 @@ namespace MDMTask
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel2 = new System.Windows.Forms.Panel();
             this.monthlyPanel = new System.Windows.Forms.Panel();
+            this.connectToLabel = new System.Windows.Forms.Label();
+            this.connectToCheckBox = new System.Windows.Forms.CheckBox();
+            this.serverNameLabel = new System.Windows.Forms.Label();
+            this.userLabel = new System.Windows.Forms.Label();
+            this.domainLabel = new System.Windows.Forms.Label();
+            this.passwordLabel = new System.Windows.Forms.Label();
+            this.ServerTextBox = new System.Windows.Forms.TextBox();
+            this.userTextBox = new System.Windows.Forms.TextBox();
+            this.domainTextBox = new System.Windows.Forms.TextBox();
+            this.passwordTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDaily)).BeginInit();
             this.tabControlMonthlyMode.SuspendLayout();
             this.tabPageMonthlyDayOfMonth.SuspendLayout();
@@ -75,7 +85,7 @@ namespace MDMTask
             // 
             // btnCreateTask
             // 
-            this.btnCreateTask.Location = new System.Drawing.Point(384, 31);
+            this.btnCreateTask.Location = new System.Drawing.Point(275, 120);
             this.btnCreateTask.Name = "btnCreateTask";
             this.btnCreateTask.Size = new System.Drawing.Size(75, 20);
             this.btnCreateTask.TabIndex = 0;
@@ -103,7 +113,7 @@ namespace MDMTask
             // labelStartDate
             // 
             this.labelStartDate.AutoSize = true;
-            this.labelStartDate.Location = new System.Drawing.Point(154, 148);
+            this.labelStartDate.Location = new System.Drawing.Point(154, 165);
             this.labelStartDate.Name = "labelStartDate";
             this.labelStartDate.Size = new System.Drawing.Size(32, 13);
             this.labelStartDate.TabIndex = 3;
@@ -111,7 +121,7 @@ namespace MDMTask
             // 
             // dateTimePickerStartDate
             // 
-            this.dateTimePickerStartDate.Location = new System.Drawing.Point(192, 143);
+            this.dateTimePickerStartDate.Location = new System.Drawing.Point(192, 158);
             this.dateTimePickerStartDate.Name = "dateTimePickerStartDate";
             this.dateTimePickerStartDate.Size = new System.Drawing.Size(158, 20);
             this.dateTimePickerStartDate.TabIndex = 4;
@@ -119,7 +129,7 @@ namespace MDMTask
             // labelEndDate
             // 
             this.labelEndDate.AutoSize = true;
-            this.labelEndDate.Location = new System.Drawing.Point(389, 148);
+            this.labelEndDate.Location = new System.Drawing.Point(389, 164);
             this.labelEndDate.Name = "labelEndDate";
             this.labelEndDate.Size = new System.Drawing.Size(29, 13);
             this.labelEndDate.TabIndex = 39;
@@ -127,7 +137,7 @@ namespace MDMTask
             // 
             // dateTimePickerEndDate
             // 
-            this.dateTimePickerEndDate.Location = new System.Drawing.Point(424, 143);
+            this.dateTimePickerEndDate.Location = new System.Drawing.Point(424, 157);
             this.dateTimePickerEndDate.Name = "dateTimePickerEndDate";
             this.dateTimePickerEndDate.Size = new System.Drawing.Size(164, 20);
             this.dateTimePickerEndDate.TabIndex = 40;
@@ -136,7 +146,7 @@ namespace MDMTask
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(619, 148);
+            this.label2.Location = new System.Drawing.Point(610, 163);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(33, 13);
             this.label2.TabIndex = 50;
@@ -146,7 +156,7 @@ namespace MDMTask
             // 
             this.dateTimePickerTriggerTime.CustomFormat = "";
             this.dateTimePickerTriggerTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePickerTriggerTime.Location = new System.Drawing.Point(658, 142);
+            this.dateTimePickerTriggerTime.Location = new System.Drawing.Point(649, 157);
             this.dateTimePickerTriggerTime.Name = "dateTimePickerTriggerTime";
             this.dateTimePickerTriggerTime.ShowUpDown = true;
             this.dateTimePickerTriggerTime.Size = new System.Drawing.Size(96, 20);
@@ -224,7 +234,7 @@ namespace MDMTask
             this.tabPageMonthlyDayOfMonth.Location = new System.Drawing.Point(4, 22);
             this.tabPageMonthlyDayOfMonth.Name = "tabPageMonthlyDayOfMonth";
             this.tabPageMonthlyDayOfMonth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMonthlyDayOfMonth.Size = new System.Drawing.Size(204, 129);
+            this.tabPageMonthlyDayOfMonth.Size = new System.Drawing.Size(221, 129);
             this.tabPageMonthlyDayOfMonth.TabIndex = 0;
             this.tabPageMonthlyDayOfMonth.Text = "Day of Month";
             this.tabPageMonthlyDayOfMonth.UseVisualStyleBackColor = true;
@@ -343,6 +353,7 @@ namespace MDMTask
             "December"});
             this.checkedListBoxMonthlyMonths.Location = new System.Drawing.Point(75, 14);
             this.checkedListBoxMonthlyMonths.Name = "checkedListBoxMonthlyMonths";
+            this.checkedListBoxMonthlyMonths.ScrollAlwaysVisible = true;
             this.checkedListBoxMonthlyMonths.Size = new System.Drawing.Size(120, 109);
             this.checkedListBoxMonthlyMonths.TabIndex = 0;
             // 
@@ -398,9 +409,9 @@ namespace MDMTask
             this.panel1.Controls.Add(this.monthlyRadio);
             this.panel1.Controls.Add(this.dailyRadio);
             this.panel1.Controls.Add(this.weeklyRadio);
-            this.panel1.Location = new System.Drawing.Point(25, 137);
+            this.panel1.Location = new System.Drawing.Point(25, 158);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(120, 235);
+            this.panel1.Size = new System.Drawing.Size(120, 223);
             this.panel1.TabIndex = 57;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -453,7 +464,7 @@ namespace MDMTask
             this.panel2.Controls.Add(this.labelWeeklyDays);
             this.panel2.Controls.Add(this.labelDailyDay);
             this.panel2.Controls.Add(this.checkedListBoxWeeklyDays);
-            this.panel2.Location = new System.Drawing.Point(154, 172);
+            this.panel2.Location = new System.Drawing.Point(151, 181);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(600, 200);
             this.panel2.TabIndex = 63;
@@ -469,11 +480,104 @@ namespace MDMTask
             this.monthlyPanel.Size = new System.Drawing.Size(433, 175);
             this.monthlyPanel.TabIndex = 64;
             // 
+            // connectToLabel
+            // 
+            this.connectToLabel.AutoSize = true;
+            this.connectToLabel.Location = new System.Drawing.Point(23, 127);
+            this.connectToLabel.Name = "connectToLabel";
+            this.connectToLabel.Size = new System.Drawing.Size(93, 13);
+            this.connectToLabel.TabIndex = 64;
+            this.connectToLabel.Text = "Connect to Server";
+            // 
+            // connectToCheckBox
+            // 
+            this.connectToCheckBox.AutoSize = true;
+            this.connectToCheckBox.Location = new System.Drawing.Point(145, 127);
+            this.connectToCheckBox.Name = "connectToCheckBox";
+            this.connectToCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.connectToCheckBox.TabIndex = 65;
+            this.connectToCheckBox.UseVisualStyleBackColor = true;
+            this.connectToCheckBox.CheckedChanged += new System.EventHandler(this.connectToCheckBox_CheckedChanged);
+            // 
+            // serverNameLabel
+            // 
+            this.serverNameLabel.AutoSize = true;
+            this.serverNameLabel.Location = new System.Drawing.Point(389, 38);
+            this.serverNameLabel.Name = "serverNameLabel";
+            this.serverNameLabel.Size = new System.Drawing.Size(69, 13);
+            this.serverNameLabel.TabIndex = 66;
+            this.serverNameLabel.Text = "Server Name";
+            // 
+            // userLabel
+            // 
+            this.userLabel.AutoSize = true;
+            this.userLabel.Location = new System.Drawing.Point(389, 71);
+            this.userLabel.Name = "userLabel";
+            this.userLabel.Size = new System.Drawing.Size(29, 13);
+            this.userLabel.TabIndex = 67;
+            this.userLabel.Text = "User";
+            // 
+            // domainLabel
+            // 
+            this.domainLabel.AutoSize = true;
+            this.domainLabel.Location = new System.Drawing.Point(389, 99);
+            this.domainLabel.Name = "domainLabel";
+            this.domainLabel.Size = new System.Drawing.Size(43, 13);
+            this.domainLabel.TabIndex = 68;
+            this.domainLabel.Text = "Domain";
+            // 
+            // passwordLabel
+            // 
+            this.passwordLabel.AutoSize = true;
+            this.passwordLabel.Location = new System.Drawing.Point(389, 124);
+            this.passwordLabel.Name = "passwordLabel";
+            this.passwordLabel.Size = new System.Drawing.Size(53, 13);
+            this.passwordLabel.TabIndex = 69;
+            this.passwordLabel.Text = "Password";
+            // 
+            // ServerTextBox
+            // 
+            this.ServerTextBox.Location = new System.Drawing.Point(482, 35);
+            this.ServerTextBox.Name = "ServerTextBox";
+            this.ServerTextBox.Size = new System.Drawing.Size(205, 20);
+            this.ServerTextBox.TabIndex = 70;
+            // 
+            // userTextBox
+            // 
+            this.userTextBox.Location = new System.Drawing.Point(482, 68);
+            this.userTextBox.Name = "userTextBox";
+            this.userTextBox.Size = new System.Drawing.Size(205, 20);
+            this.userTextBox.TabIndex = 71;
+            // 
+            // domainTextBox
+            // 
+            this.domainTextBox.Location = new System.Drawing.Point(482, 92);
+            this.domainTextBox.Name = "domainTextBox";
+            this.domainTextBox.Size = new System.Drawing.Size(205, 20);
+            this.domainTextBox.TabIndex = 72;
+            // 
+            // passwordTextBox
+            // 
+            this.passwordTextBox.Location = new System.Drawing.Point(482, 120);
+            this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.Size = new System.Drawing.Size(205, 20);
+            this.passwordTextBox.TabIndex = 73;
+            // 
             // frmTaskScheduler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(773, 429);
+            this.ClientSize = new System.Drawing.Size(773, 447);
+            this.Controls.Add(this.passwordTextBox);
+            this.Controls.Add(this.domainTextBox);
+            this.Controls.Add(this.userTextBox);
+            this.Controls.Add(this.ServerTextBox);
+            this.Controls.Add(this.passwordLabel);
+            this.Controls.Add(this.domainLabel);
+            this.Controls.Add(this.userLabel);
+            this.Controls.Add(this.serverNameLabel);
+            this.Controls.Add(this.connectToCheckBox);
+            this.Controls.Add(this.connectToLabel);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.startInBox);
@@ -544,5 +648,15 @@ namespace MDMTask
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel monthlyPanel;
+        private System.Windows.Forms.Label connectToLabel;
+        private System.Windows.Forms.CheckBox connectToCheckBox;
+        private System.Windows.Forms.Label serverNameLabel;
+        private System.Windows.Forms.Label userLabel;
+        private System.Windows.Forms.Label domainLabel;
+        private System.Windows.Forms.Label passwordLabel;
+        private System.Windows.Forms.TextBox ServerTextBox;
+        private System.Windows.Forms.TextBox userTextBox;
+        private System.Windows.Forms.TextBox domainTextBox;
+        private System.Windows.Forms.TextBox passwordTextBox;
     }
 }
