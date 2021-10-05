@@ -36,3 +36,4 @@ C:\Users\Ritwick\Documents\tatapower-mdm\MDMTask\bin\Debug\MDMTask.pdb
 C:\Users\Ritwick\Documents\tatapower-mdm\MDMTask\bin\Debug\Interop.TaskScheduler.dll
 C:\Users\Ritwick\Documents\tatapower-mdm\MDMTask\obj\Debug\MDMTask.exe
 C:\Users\Ritwick\Documents\tatapower-mdm\MDMTask\obj\Debug\MDMTask.pdb
+C:\Users\Ritwick\Documents\tatapower-mdm\MDMTask\obj\Debug\MDMTask.TaskList.resources
